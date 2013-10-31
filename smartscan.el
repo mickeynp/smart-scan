@@ -44,7 +44,7 @@
 
 ;;; Code:
 
-(provide 'smart-scan)
+(provide 'smartscan)
 
 
 ;;; Default Keybindings
