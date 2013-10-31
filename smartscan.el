@@ -23,26 +23,18 @@
 ;; article on
 ;; http://www.masteringemacs.org/articles/2011/01/14/effective-editing-movement/
 ;;
-;; A long time ago I used an IDE feature that let you quickly search
-;; up or down for whatever identifier the point was on, and I decided
-;; I wanted something like it in Emacs so I wrote the code snippet you
-;; see below. Now, it's perfectly possible to do what it does with
-;; isearch but I use the code as it avoids the hassle of fidgeting
-;; with isearch to get the term under point into the search field.
-
-;; In the code below the commands are bound to M-p and M-n.
-
-;; Smart Scan's main advantage over isearch is that all you need to do
-;; is move the point to whatever identifier you wish to search for and
-;; then press M-n to find the next match in the buffer. The main use
-;; is not that you go "looking" for the identifier you wish to search
-;; for first: you are probably better off using isearch then; no, the
-;; main advantage is when you're already writing code -- or stepping
-;; through it with a debugger -- then smart scan will beat out
-;; isearch.
-
-;; Smart Scan is also clever enough to ignore comments and strings
-;; containing the identifier you are looking for.
+;; Smart Scan let's you jump between symbols in your buffer, based on
+;; the initial symbol your point was on when you started the
+;; search. Incremental calls will still respect the original search
+;; query so you can move up or down in your buffer, quickly, to find
+;; other matches without having to resort to `isearch' to find things
+;; first. The main advantage over isearch is speed: Smart Scan will
+;; guess the symbol point is on and immediately find other symbols
+;; matching it, in an unintrusive way.
+;;; HOW TO USE IT
+;;
+;; Simply type `smart-symbol-go-forward' (or press M-n) to go forward;
+;; or `smart-symbol-go-backward' (M-p) to go back.
 
 ;;; Customizations
 
