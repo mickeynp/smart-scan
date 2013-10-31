@@ -64,6 +64,14 @@ either `smart-symbol-go-forward' or `smart-symbol-go-backward'")
 (defvar smart-symbol-old-pt nil
   "Contains the location of the old point")
 
+
+(defcustom smart-selector "word"
+  "Select word or symbol with smartscan."
+  :group 'smartscan
+  :type '(radio
+          (const :tag "Word" "word")
+          (const :tag "Symbol" "symbol")))
+
 (make-local-variable 'smart-use-extended-syntax)
 
 (defun smart-symbol-goto (name direction)
@@ -130,8 +138,8 @@ instead."
   ;; part of a single expression.
   (with-smart-symbol
     ;; grab the word and return it
-    (let ((word (thing-at-point 'word))
-          (bounds (bounds-of-thing-at-point 'word)))
+    (let ((word (thing-at-point (intern smart-selector)))
+          (bounds (bounds-of-thing-at-point (intern smart-selector))))
       (if word
           (progn
             (cond
