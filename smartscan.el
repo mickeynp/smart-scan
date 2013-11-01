@@ -72,7 +72,7 @@ either `smartscan-symbol-go-forward' or `smartscan-symbol-go-backward'")
 
 (make-local-variable 'smartscan-use-extended-syntax)
 
-(defcustom smart-selector "word"
+(defcustom smartscan-symbol-selector "word"
   "Select word or symbol with smartscan."
   :group 'smartscan
   :type '(radio
@@ -146,8 +146,8 @@ instead."
   ;; part of a single expression.
   (smartscan-with-symbol
     ;; grab the word and return it
-    (let ((word (thing-at-point (intern smart-selector)))
-          (bounds (bounds-of-thing-at-point (intern smart-selector))))
+    (let ((word (thing-at-point (intern smartscan-symbol-selector)))
+          (bounds (bounds-of-thing-at-point (intern smartscan-symbol-selector))))
       (if word
           (progn
             (cond
