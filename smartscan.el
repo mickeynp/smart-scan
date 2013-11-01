@@ -8,13 +8,6 @@
 ;;; Contributions
 ;; Thanks to Ryan Mulligan and Thomas Wallrafen
 
-;;; Install:
-;; Install package
-;; (package-install 'smartscan)
-;;
-;; Enable minor mode
-;; (smartscan 1)
-
 ;;; License:
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -30,11 +23,12 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
+
 ;; This code comes from my article Effective Editing I: Movement"
 ;; article on
 ;; http://www.masteringemacs.org/articles/2011/01/14/effective-editing-movement/
 ;;
-;; Smart Scan let's you jump between symbols in your buffer, based on
+;; Smart Scan lets you jump between symbols in your buffer, based on
 ;; the initial symbol your point was on when you started the
 ;; search. Incremental calls will still respect the original search
 ;; query so you can move up or down in your buffer, quickly, to find
@@ -42,12 +36,23 @@
 ;; first. The main advantage over isearch is speed: Smart Scan will
 ;; guess the symbol point is on and immediately find other symbols
 ;; matching it, in an unintrusive way.
-;;; HOW TO USE IT
+
+;; INSTALLATION
+
+;; Install package
+;; (package-install 'smartscan)
+;;
+;; Enable minor mode in a specific mode hook using
+;; (smartscan-mode 1)
+;; or globally using
+;; (global-smartscan-mode 1)
+
+;; HOW TO USE IT
 ;;
 ;; Simply type `smartscan-symbol-go-forward' (or press M-n) to go forward;
 ;; or `smartscan-symbol-go-backward' (M-p) to go back.
 
-;;; Customizations
+;; CUSTOMIZATION
 
 ;; You can customize `smartscan-use-extended-syntax' to alter
 ;; (temporarily, when you search) the syntax table used by Smart Scan
@@ -175,9 +180,18 @@ You can customize Smart Scan by editing
 
 Key bindings:
 \\{smartscan-map}"
-  :global t
   :keymap smartscan-map
   :group 'smartscan)
+
+;;;###autoload
+(define-globalized-minor-mode global-smartscan-mode smartscan-mode
+  smartscan-mode-turn-on)
+
+(defun smartscan-mode-turn-on ()
+  "Enable `smartscan-mode' if appropriate for this buffer."
+  (unless (minibufferp)
+    (smartscan-mode 1)))
+
 
 (provide 'smartscan)
 ;;; smartscan.el ends here
