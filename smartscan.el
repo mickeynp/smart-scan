@@ -6,7 +6,7 @@
 ;; Keywords: extensions
 
 ;;; Contributions
-;; Thanks to Ryan Mulligan and Thomas Wallrafen
+;; Thanks to Ryan Mulligan, Thomas Wallrafen and Steve Purcell.
 
 ;;; License:
 ;; This program is free software; you can redistribute it and/or modify
