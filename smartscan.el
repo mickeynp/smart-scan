@@ -33,12 +33,12 @@
 ;; matching it, in an unintrusive way.
 ;;; HOW TO USE IT
 ;;
-;; Simply type `smart-symbol-go-forward' (or press M-n) to go forward;
-;; or `smart-symbol-go-backward' (M-p) to go back.
+;; Simply type `smartscan-symbol-go-forward' (or press M-n) to go forward;
+;; or `smartscan-symbol-go-backward' (M-p) to go back.
 
 ;;; Customizations
 
-;; You can customize `smart-use-extended-syntax' to alter
+;; You can customize `smartscan-use-extended-syntax' to alter
 ;; (temporarily, when you search) the syntax table used by Smart Scan
 ;; to find matches in your buffer.
 
