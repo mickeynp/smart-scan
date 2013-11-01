@@ -5,14 +5,17 @@ Jumps between other symbols found at point in Emacs.
 
 Installation
 ============
-```
+```lisp
 (package-install 'smartscan)
 ```
-Enable minor mode
+Enable it globally
+```lisp
+(global-smartscan-mode 1)
 ```
-(smartscan-mode 1)
+or just for specific modes
+```lisp
+(add-hook 'prog-mode-hook #'smartscan-mode)
 ```
-or with `M-x smartscan-mode`
 
 Usage
 =====
