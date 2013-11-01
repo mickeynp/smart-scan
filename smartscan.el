@@ -166,10 +166,20 @@ instead."
   "Keymap for `smartscan'.")
 
 ;;;###autoload
-(define-minor-mode smartscan
-  "Jumps between other symbols found at point."
+(define-minor-mode smartscan-mode
+  "Jumps between other symbols found at point.
+
+When Smart Scan mode is enabled, you can jump between the all the
+symbols in your current buffer that point is on.
+
+You can customize Smart Scan by editing
+`smartscan-use-extended-syntax' and `smartscan-symbol-selector'.
+
+Key bindings:
+\\{smartscan-map}"
   :global t
-  :keymap smartscan-map)
+  :keymap smartscan-map
+  :group 'smartscan)
 
 (provide 'smartscan)
 ;;; smartscan.el ends here
