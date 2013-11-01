@@ -5,6 +5,14 @@
 ;; Author: Mickey Petersen <mickey@masteringemacs.org>
 ;; Keywords: extensions
 
+;;; Install:
+;; Install package
+;; (package-install 'smartscan)
+;;
+;; Enable minor mode
+;; (smartscan 1)
+
+;;; License:
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation, either version 3 of the License, or
@@ -45,11 +53,6 @@
 ;;; Code:
 
 (provide 'smartscan)
-
-
-;;; Default Keybindings
-(global-set-key (kbd "M-n") 'smartscan-symbol-go-forward)
-(global-set-key (kbd "M-p") 'smartscan-symbol-go-backward)
 
 (defvar smartscan-use-extended-syntax nil
   "If t the smart symbol functionality will consider extended
@@ -96,11 +99,13 @@ is valid."
                   (throw 'done t))))
       (goto-char smartscan-symbol-old-pt))))
 
+;;;###autoload
 (defun smartscan-symbol-go-forward ()
   "Jumps forward to the next symbol at point"
   (interactive)
   (smartscan-symbol-goto (smartscan-symbol-at-pt 'end) 'forward))
 
+;;;###autoload
 (defun smartscan-symbol-go-backward ()
   "Jumps backward to the previous symbol at point"
   (interactive)
@@ -141,6 +146,19 @@ instead."
             word)
         (error "No symbol found")))))
 
+;;; Default Keybindings
+(defvar smartscan-map
+  (let ((m (make-sparse-keymap)))
+    (define-key m (kbd "M-n") 'smartscan-symbol-go-forward)
+    (define-key m (kbd "M-p") 'smartscan-symbol-go-backward)
+    m)
+  "Keymap for `smartscan'.")
+
+;;;###autoload
+(define-minor-mode smartscan
+  "Jumps between other symbols found at point."
+  :global t
+  :keymap smartscan-map)
 
 (provide 'smartscan)
 ;;; smartscan.el ends here
