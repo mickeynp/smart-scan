@@ -5,6 +5,9 @@
 ;; Author: Mickey Petersen <mickey@masteringemacs.org>
 ;; Keywords: extensions
 
+;;; Contributions
+;; Thanks to Ryan Mulligan and Thomas Wallrafen
+
 ;;; Install:
 ;; Install package
 ;; (package-install 'smartscan)
