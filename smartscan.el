@@ -10,10 +10,16 @@
 
 ;;; Install:
 ;; Install package
-;; (package-install 'smartscan)
 ;;
-;; Enable minor mode
-;; (smartscan 1)
+;;   (package-install 'smartscan)
+;;
+;; Enable it globally
+;;
+;;   (global-smartscan-mode 1)
+;;
+;; Or just for specific modes
+;;
+;;   (add-hook 'prog-mode-hook #'smartscan-mode)
 
 ;;; License:
 ;; This program is free software; you can redistribute it and/or modify
@@ -135,7 +141,7 @@ is valid."
      (modify-syntax-entry ?- "w")
      ,body))
 
-  
+
 (defun smartscan-symbol-at-pt (&optional dir)
   "Returns the symbol at point and moves point to DIR (either `beginning' or `end') of the symbol.
 
@@ -177,9 +183,17 @@ You can customize Smart Scan by editing
 
 Key bindings:
 \\{smartscan-map}"
-  :global t
   :keymap smartscan-map
   :group 'smartscan)
+
+(defun turn-on-smartscan-mode ()
+  "Turn on Smartscan Mode."
+  (smartscan-mode 1))
+
+;;;###autoload
+(define-globalized-minor-mode global-smartscan-mode
+  smartscan-mode
+  turn-on-smartscan-mode)
 
 (provide 'smartscan)
 ;;; smartscan.el ends here

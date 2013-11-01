@@ -8,11 +8,14 @@ Installation
 ```
 (package-install 'smartscan)
 ```
-Enable minor mode
+Enable it globally
 ```
-(smartscan-mode 1)
+(global-smartscan-mode 1)
 ```
-or with `M-x smartscan-mode`
+or just for specific modes
+```
+(add-hook 'prog-mode-hook #'smartscan-mode)
+```
 
 Usage
 =====
