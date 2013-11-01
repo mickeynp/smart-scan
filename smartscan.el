@@ -3,10 +3,14 @@
 ;; Copyright (C) 2011-2013 Mickey Petersen
 
 ;; Author: Mickey Petersen <mickey@masteringemacs.org>
+;; Maintainer: Mickey Petersen <mickey@masteringemacs.org>
 ;; Keywords: extensions
+;; Version: 0.1
 
 ;;; Contributions
 ;; Thanks to Ryan Mulligan, Thomas Wallrafen and Steve Purcell.
+
+;; This file is not part of GNU Emacs.
 
 ;;; License:
 ;; This program is free software; you can redistribute it and/or modify
