@@ -48,23 +48,23 @@
 
 
 ;;; Default Keybindings
-(global-set-key (kbd "M-n") 'smart-symbol-go-forward)
-(global-set-key (kbd "M-p") 'smart-symbol-go-backward)
+(global-set-key (kbd "M-n") 'smartscan-symbol-go-forward)
+(global-set-key (kbd "M-p") 'smartscan-symbol-go-backward)
 
-(defvar smart-use-extended-syntax nil
+(defvar smartscan-use-extended-syntax nil
   "If t the smart symbol functionality will consider extended
 syntax in finding matches, if such matches exist.")
 
-(defvar smart-last-symbol-name ""
+(defvar smartscan-last-symbol-name ""
   "Contains the current symbol name.
 
 This is only refreshed when `last-command' does not contain
-either `smart-symbol-go-forward' or `smart-symbol-go-backward'")
+either `smartscan-symbol-go-forward' or `smartscan-symbol-go-backward'")
 
-(defvar smart-symbol-old-pt nil
+(defvar smartscan-symbol-old-pt nil
   "Contains the location of the old point")
 
-
+(make-local-variable 'smartscan-use-extended-syntaxp)
 (defcustom smart-selector "word"
   "Select word or symbol with smartscan."
   :group 'smartscan
@@ -72,25 +72,24 @@ either `smart-symbol-go-forward' or `smart-symbol-go-backward'")
           (const :tag "Word" "word")
           (const :tag "Symbol" "symbol")))
 
-(make-local-variable 'smart-use-extended-syntax)
 
-(defun smart-symbol-goto (name direction)
+(defun smartscan-symbol-goto (name direction)
   "Jumps to the next NAME in DIRECTION in the current buffer.
 
 DIRECTION must be either `forward' or `backward'; no other option
 is valid."
 
   ;; if `last-command' did not contain
-  ;; `smart-symbol-go-forward/backward' then we assume it's a
+  ;; `smartscan-symbol-go-forward/backward' then we assume it's a
   ;; brand-new command and we re-set the search term.
-  (unless (memq last-command '(smart-symbol-go-forward
-                               smart-symbol-go-backward))
-    (setq smart-last-symbol-name name))
-  (setq smart-symbol-old-pt (point))
+  (unless (memq last-command '(smartscan-symbol-go-forward
+                               smartscan-symbol-go-backward))
+    (setq smartscan-last-symbol-name name))
+  (setq smartscan-symbol-old-pt (point))
   (message (format "%s scan for symbol \"%s\""
                    (capitalize (symbol-name direction))
-                   smart-last-symbol-name))
-  (with-smart-symbol
+                   smartscan-last-symbol-name))
+  (smartscan-with-symbol
     (unless (catch 'done
               (while (funcall (cond
                                ((eq direction 'forward) ; forward
@@ -98,27 +97,27 @@ is valid."
                                ((eq direction 'backward) ; backward
                                 're-search-backward)
                                (t (error "Invalid direction"))) ; all others
-                              (concat "\\<" smart-last-symbol-name "\\>") nil t)
+                              (concat "\\<" smartscan-last-symbol-name "\\>") nil t)
                 (unless (memq (syntax-ppss-context
                                (syntax-ppss (point))) '(string comment))
                   (throw 'done t))))
-      (goto-char smart-symbol-old-pt))))
+      (goto-char smartscan-symbol-old-pt))))
 
-(defun smart-symbol-go-forward ()
+(defun smartscan-symbol-go-forward ()
   "Jumps forward to the next symbol at point"
   (interactive)
-  (smart-symbol-goto (smart-symbol-at-pt 'end) 'forward))
+  (smartscan-symbol-goto (smartscan-symbol-at-pt 'end) 'forward))
 
-(defun smart-symbol-go-backward ()
+(defun smartscan-symbol-go-backward ()
   "Jumps backward to the previous symbol at point"
   (interactive)
-  (smart-symbol-goto (smart-symbol-at-pt 'beginning) 'backward))
+  (smartscan-symbol-goto (smartscan-symbol-at-pt 'beginning) 'backward))
 
-(defmacro with-smart-symbol (body)
+(defmacro smartscan-with-symbol (body)
   "Macro that initialises the syntax table"
   (declare (indent defun))
   `(with-syntax-table (make-syntax-table)
-     (if smart-use-extended-syntax
+     (if smartscan-use-extended-syntax
          (modify-syntax-entry ?. "w"))
      ;; we need this outside the if-statement as using the word
      ;; parameter with `thing-at-point' will treat underscore as a word
@@ -128,15 +127,15 @@ is valid."
      ,body))
 
   
-(defun smart-symbol-at-pt (&optional dir)
+(defun smartscan-symbol-at-pt (&optional dir)
   "Returns the symbol at point and moves point to DIR (either `beginning' or `end') of the symbol.
 
-If `smart-use-extended-syntax' is t then that symbol is returned
+If `smartscan-use-extended-syntax' is t then that symbol is returned
 instead."
   ;; we need a quick-and-dirty syntax table hack here to make
   ;; `thing-at-point' pick up on the fact that '.', '_', etc. are all
   ;; part of a single expression.
-  (with-smart-symbol
+  (smartscan-with-symbol
     ;; grab the word and return it
     (let ((word (thing-at-point (intern smart-selector)))
           (bounds (bounds-of-thing-at-point (intern smart-selector))))
