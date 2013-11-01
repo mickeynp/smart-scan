@@ -1,18 +1,18 @@
-smartscan
-==========
+smartscan-mode
+==============
 
 Jumps between other symbols found at point in Emacs.
 
 Installation
 ============
 ```
-(package-install 'smartscan)
+(package-install 'smartscan-mode)
 ```
 Enable minor mode
 ```
-(smartscan 1)
+(smartscan-mode 1)
 ```
-or with `M-x smartscan`
+or with `M-x smartscan-mode`
 
 Usage
 =====
