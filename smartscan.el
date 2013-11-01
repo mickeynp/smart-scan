@@ -79,6 +79,18 @@ either `smartscan-symbol-go-forward' or `smartscan-symbol-go-backward'")
           (const :tag "Word" "word")
           (const :tag "Symbol" "symbol")))
 
+(defmacro smartscan-with-symbol (body)
+  "Macro that initialises the syntax table"
+  (declare (indent defun))
+  `(with-syntax-table (make-syntax-table)
+     (if smartscan-use-extended-syntax
+         (modify-syntax-entry ?. "w"))
+     ;; we need this outside the if-statement as using the word
+     ;; parameter with `thing-at-point' will treat underscore as a word
+     ;; separator.
+     (modify-syntax-entry ?_ "w")
+     (modify-syntax-entry ?- "w")
+     ,body))
 
 (defun smartscan-symbol-goto (name direction)
   "Jumps to the next NAME in DIRECTION in the current buffer.
@@ -122,20 +134,6 @@ is valid."
   (interactive)
   (smartscan-symbol-goto (smartscan-symbol-at-pt 'beginning) 'backward))
 
-(defmacro smartscan-with-symbol (body)
-  "Macro that initialises the syntax table"
-  (declare (indent defun))
-  `(with-syntax-table (make-syntax-table)
-     (if smartscan-use-extended-syntax
-         (modify-syntax-entry ?. "w"))
-     ;; we need this outside the if-statement as using the word
-     ;; parameter with `thing-at-point' will treat underscore as a word
-     ;; separator.
-     (modify-syntax-entry ?_ "w")
-     (modify-syntax-entry ?- "w")
-     ,body))
-
-  
 (defun smartscan-symbol-at-pt (&optional dir)
   "Returns the symbol at point and moves point to DIR (either `beginning' or `end') of the symbol.
 
