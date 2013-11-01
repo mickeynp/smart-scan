@@ -67,7 +67,8 @@ either `smartscan-symbol-go-forward' or `smartscan-symbol-go-backward'")
 (defvar smartscan-symbol-old-pt nil
   "Contains the location of the old point")
 
-(make-local-variable 'smartscan-use-extended-syntaxp)
+(make-local-variable 'smartscan-use-extended-syntax)
+
 (defcustom smart-selector "word"
   "Select word or symbol with smartscan."
   :group 'smartscan
