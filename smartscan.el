@@ -24,8 +24,7 @@
 
 ;;; Commentary:
 
-;; This code comes from my article Effective Editing I: Movement"
-;; article on
+;; This code comes from my article "Effective Editing I: Movement"
 ;; http://www.masteringemacs.org/articles/2011/01/14/effective-editing-movement/
 ;;
 ;; Smart Scan lets you jump between symbols in your buffer, based on
