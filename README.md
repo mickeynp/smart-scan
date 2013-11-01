@@ -6,7 +6,7 @@ Jumps between other symbols found at point in Emacs.
 Installation
 ============
 ```
-(package-install 'smartscan-mode)
+(package-install 'smartscan)
 ```
 Enable minor mode
 ```
