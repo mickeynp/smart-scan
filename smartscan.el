@@ -4,6 +4,7 @@
 
 ;; Author: Mickey Petersen <mickey@masteringemacs.org>
 ;; Keywords: extensions
+;; Version: DEV
 
 ;;; Contributions
 ;; Thanks to Ryan Mulligan and Thomas Wallrafen
