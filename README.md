@@ -1,7 +1,14 @@
 smartscan-mode
 ==============
 
-Jumps between other symbols found at point in Emacs.
+Quickly jumps between other symbols found at point in Emacs.
+
+How it works
+------------
+
+Smart Scan will try to infer the symbol your point is on and let you jump to other, identical, symbols 
+elsewhere in your current buffer with a single key stroke. The advantage over isearch is its unintrusiveness; 
+there are no menus, prompts or other UI elements that require your attention.
 
 Installation
 ============
@@ -12,7 +19,7 @@ Enable minor mode
 ```
 (smartscan-mode 1)
 ```
-or with `M-x smartscan-mode`
+or with `M-x smartscan-mode`.
 
 Usage
 =====
