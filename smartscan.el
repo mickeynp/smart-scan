@@ -51,12 +51,13 @@
 ;; (global-smartscan-mode 1)
 
 ;; HOW TO USE IT
-;;
-;; Simply type `smartscan-symbol-go-forward' (or press M-n) to go forward;
-;; or `smartscan-symbol-go-backward' (M-p) to go back.
+
+;; Simply type `smartscan-symbol-go-forward' (or press M-n) to go
+;; forward; or `smartscan-symbol-go-backward' (M-p) to go
+;; back. Additionally, you can replace all symbols point is on by
+;; invoking M-' (that's "M-quote")
 
 ;; CUSTOMIZATION
-
 ;; You can customize `smartscan-use-extended-syntax' to alter
 ;; (temporarily, when you search) the syntax table used by Smart Scan
 ;; to find matches in your buffer.
@@ -163,11 +164,39 @@ instead."
             word)
         (error "No symbol found")))))
 
+
+;;;###autoload
+(defun smartscan-symbol-replace (arg)
+  "Replaces the symbol at point with another string in the entire buffer.
+
+With C-u the scope is limited to the current defun, as defined by
+`narrow-to-defun'.
+
+This function uses `search-forward' and `replace-match' to do the
+actual work."
+  (interactive "p")
+  (save-excursion
+      (let* ((oldsymbol (smartscan-symbol-at-pt 'beginning))
+             (newsymbol (query-replace-read-to
+                         oldsymbol (format "%sSmart Scan replace"
+                                           (if arg "[Defun] " "")) nil))
+             (counter 0))
+        (if arg (goto-char (save-excursion (beginning-of-defun) (point)))
+          ;; go to the beginning of the buffer as it's assumed you want to
+          ;; apply it from there onwards. beginning
+          (goto-char (point-min)))
+        (while (search-forward
+                oldsymbol (if arg (save-excursion (end-of-defun) (point)) nil) t nil)
+          (replace-match newsymbol nil t) (incf counter 1))
+        (message "Smart Scan replaced %d matches" counter))))
+
+
 ;;; Default Keybindings
 (defvar smartscan-map
   (let ((m (make-sparse-keymap)))
     (define-key m (kbd "M-n") 'smartscan-symbol-go-forward)
     (define-key m (kbd "M-p") 'smartscan-symbol-go-backward)
+    (define-key m (kbd "M-'") 'smartscan-symbol-replace)
     m)
   "Keymap for `smartscan'.")
 
