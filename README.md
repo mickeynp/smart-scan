@@ -23,6 +23,6 @@ or with `M-x smartscan-mode`.
 
 Usage
 =====
-`M-n` and `M-p` move between symbols.
+`M-n` and `M-p` move between symbols and `M-'` to replace all the symbols matching the one point is on.
 
 For more information on how to use Smart Scan and how to master movement in Emacs, read my article on [Effective Editing I: Movement](http://www.masteringemacs.org/articles/2011/01/14/effective-editing-movement/).
