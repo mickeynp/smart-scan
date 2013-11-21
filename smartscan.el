@@ -112,7 +112,8 @@ is valid."
   ;; brand-new command and we re-set the search term.
   (unless (memq last-command '(smartscan-symbol-go-forward
                                smartscan-symbol-go-backward))
-    (setq smartscan-last-symbol-name name))
+    (setq smartscan-last-symbol-name name)
+    (push-mark))
   (setq smartscan-symbol-old-pt (point))
   (message (format "%s scan for symbol \"%s\""
                    (capitalize (symbol-name direction))
