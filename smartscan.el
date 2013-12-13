@@ -175,7 +175,7 @@ With C-u the scope is limited to the current defun, as defined by
 
 This function uses `search-forward' and `replace-match' to do the
 actual work."
-  (interactive "p")
+  (interactive "P")
   (save-excursion
       (let* ((oldsymbol (smartscan-symbol-at-pt 'beginning))
              (newsymbol (query-replace-read-to
