@@ -66,6 +66,9 @@
 
 (provide 'smartscan)
 
+(eval-when-compile
+  (require 'cl-lib))
+
 (defvar smartscan-use-extended-syntax nil
   "If t the smart symbol functionality will consider extended
 syntax in finding matches, if such matches exist.")
@@ -188,7 +191,7 @@ actual work."
           (goto-char (point-min)))
         (while (search-forward
                 oldsymbol (if arg (save-excursion (end-of-defun) (point)) nil) t nil)
-          (replace-match newsymbol nil t) (incf counter 1))
+          (replace-match newsymbol nil t) (cl-incf counter 1))
         (message "Smart Scan replaced %d matches" counter))))
 
 
