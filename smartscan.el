@@ -1,14 +1,15 @@
 ;;; smartscan.el --- Jumps between other symbols found at point
 
-;; Copyright (C) 2011-2013 Mickey Petersen
+;; Copyright (C) 2011-2016 Mickey Petersen
 
 ;; Author: Mickey Petersen <mickey@masteringemacs.org>
 ;; Maintainer: Mickey Petersen <mickey@masteringemacs.org>
 ;; Keywords: extensions
-;; Version: 0.2
+;; Version: 0.3
 
 ;;; Contributions
-;; Thanks to Ryan Mulligan, Thomas Wallrafen and Steve Purcell.
+;; Thanks to Ryan Mulligan, Thomas Wallrafen, Brian Malehorn and Steve
+;; Purcell.
 
 ;; This file is not part of GNU Emacs.
 
@@ -61,6 +62,10 @@
 ;; You can customize `smartscan-use-extended-syntax' to alter
 ;; (temporarily, when you search) the syntax table used by Smart Scan
 ;; to find matches in your buffer.
+
+;; CHANGES
+
+;; 0.3: Only consider `-' to be part of a word in LISP modes.
 
 ;;; Code:
 
