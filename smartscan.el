@@ -101,7 +101,11 @@ either `smartscan-symbol-go-forward' or `smartscan-symbol-go-backward'")
      ;; parameter with `thing-at-point' will treat underscore as a word
      ;; separator.
      (modify-syntax-entry ?_ "w")
-     (modify-syntax-entry ?- "w")
+     (when (or (derived-mode-p 'emacs-lisp-mode)
+               (derived-mode-p 'lisp-mode)
+               (derived-mode-p 'scheme-mode)
+               (derived-mode-p 'clojure-mode))
+       (modify-syntax-entry ?- "w"))
      ,body))
 
 (defun smartscan-symbol-goto (name direction)
