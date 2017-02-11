@@ -99,7 +99,7 @@ either `smartscan-symbol-go-forward' or `smartscan-symbol-go-backward'")
 (defmacro smartscan-with-symbol (body)
   "Macro that initialises the syntax table"
   (declare (indent defun))
-  `(with-syntax-table (make-syntax-table)
+  `(with-syntax-table (make-syntax-table (syntax-table))
      (if smartscan-use-extended-syntax
          (modify-syntax-entry ?. "w"))
      ;; we need this outside the if-statement as using the word
