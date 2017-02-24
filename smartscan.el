@@ -87,6 +87,12 @@ either `smartscan-symbol-go-forward' or `smartscan-symbol-go-backward'")
 (defvar smartscan-symbol-old-pt nil
   "Contains the location of the old point")
 
+(defvar smartscan-scan-in-strings-modes '(sh-mode cperl-mode)
+  "List of major modes to enable scanning in strings.
+
+Normally, smartscan will ignore strings, but some languages can
+have symbols inside strings (notably shell scripts and Perl).")
+
 (make-local-variable 'smartscan-use-extended-syntax)
 
 (defcustom smartscan-symbol-selector "word"
@@ -130,19 +136,22 @@ is valid."
   (message (format "%s scan for symbol \"%s\""
                    (capitalize (symbol-name direction))
                    smartscan-last-symbol-name))
-  (smartscan-with-symbol
-    (unless (catch 'done
-              (while (funcall (cond
-                               ((eq direction 'forward) ; forward
-                                're-search-forward)
-                               ((eq direction 'backward) ; backward
-                                're-search-backward)
-                               (t (error "Invalid direction"))) ; all others
-                              (concat "\\<" smartscan-last-symbol-name "\\>") nil t)
-                (unless (memq (syntax-ppss-context
-                               (syntax-ppss (point))) '(string comment))
-                  (throw 'done t))))
-      (goto-char smartscan-symbol-old-pt))))
+  (let ((invalid-syntaxes '(string comment)))
+    (when (memq major-mode smartscan-scan-in-strings-modes)
+      (setq invalid-syntaxes '(comment)))
+    (smartscan-with-symbol
+      (unless (catch 'done
+                (while (funcall (cond
+                                 ((eq direction 'forward) ; forward
+                                  're-search-forward)
+                                 ((eq direction 'backward) ; backward
+                                  're-search-backward)
+                                 (t (error "Invalid direction"))) ; all others
+                                (concat "\\<" smartscan-last-symbol-name "\\>") nil t)
+                  (unless (memq (syntax-ppss-context (syntax-ppss (point)))
+                                invalid-syntaxes)
+                    (throw 'done t))))
+        (goto-char smartscan-symbol-old-pt)))))
 
 ;;;###autoload
 (defun smartscan-symbol-go-forward ()
