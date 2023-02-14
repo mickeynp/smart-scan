@@ -127,9 +127,6 @@ is valid."
     (setq smartscan-last-symbol-name name)
     (push-mark))
   (setq smartscan-symbol-old-pt (point))
-  (message (format "%s scan for symbol \"%s\""
-                   (capitalize (symbol-name direction))
-                   smartscan-last-symbol-name))
   (smartscan-with-symbol
     (unless (catch 'done
               (while (funcall (cond
