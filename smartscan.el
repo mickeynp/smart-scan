@@ -5,7 +5,7 @@
 ;; Author: Mickey Petersen <mickey@masteringemacs.org>
 ;; Maintainer: Mickey Petersen <mickey@masteringemacs.org>
 ;; Keywords: extensions
-;; Version: 0.0.0-git
+;; Version: 1.0.0-git
 
 ;;; Contributions
 ;; Thanks to Ryan Mulligan, Thomas Wallrafen, Brian Malehorn and Steve
